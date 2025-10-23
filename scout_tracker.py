@@ -2095,13 +2095,13 @@ def main():
 
     # Configure page
     st.set_page_config(
-        page_title="Lion Scout Tracker",
-        page_icon="🦁",
+        page_title="Scout Tracker",
+        page_icon="🏕️",
         layout="wide"
     )
 
     # Sidebar navigation
-    st.sidebar.title("🦁 Lion Scout Tracker")
+    st.sidebar.title("🏕️ Scout Tracker")
     st.sidebar.write("---")
 
     page = st.sidebar.radio(

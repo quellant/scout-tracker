@@ -1,5 +1,5 @@
 """
-Script to create a portable Windows package for Lion Scout Tracker.
+Script to create a portable Windows package for Scout Tracker.
 This creates a folder that can be zipped and distributed to Windows users.
 """
 
@@ -11,7 +11,7 @@ def create_portable_package():
     """Create a portable distribution package."""
 
     # Create distribution folder
-    dist_folder = Path("LionScoutTracker_Portable")
+    dist_folder = Path("ScoutTracker_Portable")
     if dist_folder.exists():
         shutil.rmtree(dist_folder)
     dist_folder.mkdir()
@@ -19,15 +19,15 @@ def create_portable_package():
     print(f"Creating portable package in {dist_folder}/...")
 
     # Copy application files
-    shutil.copy("lion_tracker.py", dist_folder)
+    shutil.copy("scout_tracker.py", dist_folder)
     shutil.copy("requirements.txt", dist_folder)
     shutil.copy("README.md", dist_folder)
 
     # Create launcher script
     launcher_content = """@echo off
-title Lion Scout Tracker
+title Scout Tracker
 echo ========================================
-echo Lion Scout Tracker
+echo Scout Tracker
 echo ========================================
 echo.
 echo Starting application...
@@ -58,14 +58,14 @@ if not exist "venv" (
 )
 
 REM Run the application
-python -m streamlit run lion_tracker.py --server.headless=false
+python -m streamlit run scout_tracker.py --server.headless=false
 """
 
     with open(dist_folder / "START_TRACKER.bat", "w") as f:
         f.write(launcher_content)
 
     # Create installation instructions
-    install_instructions = """# Lion Scout Tracker - Installation Instructions
+    install_instructions = """# Scout Tracker - Installation Instructions
 
 ## Quick Start (3 steps)
 
@@ -115,7 +115,7 @@ For issues or questions, refer to the README.md file.
 
     # Create dependency installer
     dep_installer = """@echo off
-title Installing Lion Scout Tracker Dependencies
+title Installing Scout Tracker Dependencies
 echo ========================================
 echo Installing Dependencies
 echo ========================================

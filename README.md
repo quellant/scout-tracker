@@ -5,11 +5,12 @@ A local web application designed to help Cub Scout den leaders track advancement
 ## Features
 
 - **Roster Management**: Add and remove scouts from your den
-- **Requirements Management**: Full CRUD operations for Lion Scout adventure requirements
+- **Requirements Management**: Full CRUD operations for scout adventure requirements
 - **Meeting Planning**: Define meetings with dates, titles, and covered requirements
 - **Attendance Logging**: Quick check-off system for meeting attendance
 - **Automated Progress Tracking**: Automatic calculation of scout advancement based on attendance
 - **Visual Dashboard**: Progress bars showing completion percentage for each adventure
+- **Individual Scout Reports**: Detailed progress reports with meeting attendance and completion tracking
 
 ## Installation
 
@@ -24,37 +25,37 @@ pip install -r requirements.txt
 
 1. Start the application:
 ```bash
-streamlit run lion_tracker.py
+streamlit run scout_tracker.py
 ```
 
 2. Open your web browser to the URL shown (typically `http://localhost:8501`)
 
 3. Follow the workflow:
    - **Manage Roster**: Add your scouts
-   - **Manage Requirements**: Review and customize the requirements (pre-loaded with official BSA Lion requirements)
+   - **Manage Requirements**: Review and customize the requirements (pre-loaded with official BSA requirements for all ranks)
    - **Manage Meetings**: Create meetings and specify which requirements you'll cover
    - **Log Attendance**: After each meeting, check off who attended
    - **Tracker Dashboard**: View each scout's progress automatically
 
 ## Customizing for Your Den's Rank Level
 
-**The application comes pre-loaded with Lion Scout requirements**, but includes pre-packaged requirements for all Cub Scout ranks:
+**The application comes pre-loaded with requirements for all Cub Scout ranks** with comprehensive pre-packaged requirements:
 
 ### Option 1: Use Pre-Packaged Requirements (Easiest)
 1. Go to **Manage Requirements** → **Import/Export** tab
 2. Scroll to **"📦 Load Pre-Packaged Requirements"**
 3. Select your rank from the dropdown:
-   - Lion (Kindergarten) - *Default, detailed requirements*
-   - Tiger (1st Grade)
-   - Wolf (2nd Grade)
-   - Bear (3rd Grade)
-   - Webelos (4th Grade)
+   - Lion (Kindergarten) - *Detailed requirements*
+   - Tiger (1st Grade) - *Detailed requirements*
+   - Wolf (2nd Grade) - *Detailed requirements*
+   - Bear (3rd Grade) - *Detailed requirements*
+   - Webelos (4th Grade) - *Detailed requirements*
 4. Click **"📥 Load [Rank] Requirements"** and confirm
 
-**Note:** Tiger, Wolf, Bear, and Webelos requirements are simplified (adventure-level) and can be customized with detailed requirements after loading.
+**Note:** All ranks include detailed requirements that can be further customized after loading.
 
-### Option 2: Use for Lion Scouts (Default)
-- The app is ready to use out of the box with all Lion Scout requirements pre-loaded with full detail
+### Option 2: Use Default Lion Scout Requirements
+- The app starts with Lion Scout requirements pre-loaded with full detail, making it ready to use immediately for Lion dens
 
 ### Option 3: Customize Requirements Manually
 1. Use the **Add Requirement**, **Edit Requirement**, or **Delete Requirement** tabs to customize
@@ -86,9 +87,9 @@ All data is stored locally in CSV files in the `tracker_data/` directory:
 - `Meetings.csv`: Meeting details and requirements covered
 - `Meeting_Attendance.csv`: Attendance records
 
-## Requirements Structure
+## Default Requirements Structure (Lion Rank)
 
-The application comes pre-loaded with official BSA Lion Scout requirements:
+The application comes pre-loaded with official BSA Lion Scout requirements as the default:
 
 ### Required Adventures (Must complete all 6):
 1. **Bobcat** (4 requirements)
@@ -117,13 +118,16 @@ This means you only need to:
 2. Log attendance after each meeting
 3. View the automatically updated progress dashboard
 
-## Lion Rank Completion
+## Rank Completion Tracking
 
+The tracker automatically calculates and displays when a scout has earned their rank based on the requirements loaded.
+
+**Example: Lion Rank**
 To earn the Lion rank, scouts must complete:
 - All 6 required adventures (23 requirements total)
 - Any 2 elective adventures (6-8 requirements depending on which electives)
 
-The dashboard automatically calculates and displays when a scout has earned their Lion rank.
+Each rank has its own completion criteria which are tracked automatically in the dashboard and individual reports.
 
 ## Data Portability
 

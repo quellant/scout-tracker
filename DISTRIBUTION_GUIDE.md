@@ -1,4 +1,4 @@
-# Distribution Guide for Lion Scout Tracker
+# Distribution Guide for Scout Tracker
 
 ## Recommended Approach: Portable Package ⭐
 
@@ -12,9 +12,9 @@ This is the **easiest and most reliable** method for distributing your Streamlit
    ```
 
 2. **Create a zip file:**
-   - Right-click the `LionScoutTracker_Portable` folder
+   - Right-click the `ScoutTracker_Portable` folder
    - Select "Send to" → "Compressed (zipped) folder"
-   - Name it `LionScoutTracker_v1.0.zip`
+   - Name it `ScoutTracker_v1.0.zip`
 
 3. **Distribute the zip file:**
    - Upload to Google Drive, Dropbox, or email it
@@ -30,7 +30,7 @@ Users just need to:
 **Advantages:**
 - ✅ Simple and reliable
 - ✅ Small download size (~50 KB)
-- ✅ Easy to update (just replace lion_tracker.py)
+- ✅ Easy to update (just replace scout_tracker.py)
 - ✅ Users can easily back up their data
 - ✅ Works on any Windows version
 
@@ -92,7 +92,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='LionScoutTracker',
+    name='ScoutTracker',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -165,7 +165,7 @@ For the **absolute easiest distribution**, host it online for free:
 When sending to users, include this message:
 
 ```
-Hi! I've created a Lion Scout Advancement Tracker to help with tracking scout progress.
+Hi! I've created a Cub Scout Advancement Tracker to help with tracking scout progress.
 
 SETUP (One-time, 5 minutes):
 1. Download and extract the attached zip file
