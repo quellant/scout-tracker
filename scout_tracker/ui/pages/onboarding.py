@@ -69,7 +69,7 @@ def page_onboarding():
 
             st.info(rank_info[rank_option])
 
-            if st.button("✅ Continue with " + rank_option.split()[0], type="primary", use_container_width=True):
+            if st.button("✅ Continue with " + rank_option.split()[0], type="primary", width='stretch'):
                 st.session_state.selected_rank = rank_option.split()[0]
                 st.session_state.onboarding_step = 2
                 st.rerun()
@@ -131,9 +131,9 @@ def page_onboarding():
             scout_name = st.text_input("Scout Name", placeholder="Enter scout's name")
             col1, col2 = st.columns(2)
             with col1:
-                add_scout = st.form_submit_button("➕ Add Scout", use_container_width=True)
+                add_scout = st.form_submit_button("➕ Add Scout", width='stretch')
             with col2:
-                done = st.form_submit_button("✅ Done - Start Using Scout Tracker", type="primary", use_container_width=True)
+                done = st.form_submit_button("✅ Done - Start Using Scout Tracker", type="primary", width='stretch')
 
             if add_scout and scout_name.strip():
                 if scout_name not in roster_df["Scout Name"].values:

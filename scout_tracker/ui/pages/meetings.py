@@ -83,6 +83,6 @@ def page_manage_meetings():
         # Sort by date descending
         display_df = meetings_df.sort_values("Meeting_Date", ascending=False).copy()
         display_df["Meeting_Date"] = pd.to_datetime(display_df["Meeting_Date"]).dt.strftime("%Y-%m-%d")
-        st.dataframe(display_df, use_container_width=True, hide_index=True)
+        st.dataframe(display_df, width='stretch', hide_index=True)
     else:
         st.info("No meetings scheduled yet. Add a meeting above to get started!")

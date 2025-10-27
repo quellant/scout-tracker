@@ -105,7 +105,7 @@ def page_manage_roster():
     with col2:
         st.subheader("Current Den Roster")
         if not roster_df.empty:
-            st.dataframe(roster_df, use_container_width=True, hide_index=True)
+            st.dataframe(roster_df, width='stretch', hide_index=True)
 
             # Remove scout section
             st.write("---")

@@ -120,7 +120,7 @@ def page_tracker_dashboard():
     st.dataframe(
         required_summary_df,
         column_config=required_column_config,
-        use_container_width=True,
+        width='stretch',
         hide_index=True
     )
 
@@ -142,7 +142,7 @@ def page_tracker_dashboard():
     st.dataframe(
         elective_summary_df,
         column_config=elective_column_config,
-        use_container_width=True,
+        width='stretch',
         hide_index=True
     )
 
@@ -153,7 +153,7 @@ def page_tracker_dashboard():
     rank_completion_df = pd.DataFrame(rank_completion_data)
     st.dataframe(
         rank_completion_df,
-        use_container_width=True,
+        width='stretch',
         hide_index=True
     )
 
@@ -170,5 +170,5 @@ def page_tracker_dashboard():
 
         st.dataframe(
             display_tracker,
-            use_container_width=True
+            width='stretch'
         )

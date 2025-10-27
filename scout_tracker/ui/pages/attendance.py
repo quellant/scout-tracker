@@ -117,7 +117,7 @@ def page_log_attendance():
 
         col1, col2 = st.columns([1, 3])
         with col1:
-            submit_attendance = st.form_submit_button("💾 Save Attendance", use_container_width=True)
+            submit_attendance = st.form_submit_button("💾 Save Attendance", width='stretch')
         with col2:
             st.write(f"*Selected: {len(selected_scouts)} of {total_scouts} scouts*")
 

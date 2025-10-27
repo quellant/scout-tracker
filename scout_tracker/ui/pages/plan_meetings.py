@@ -163,7 +163,7 @@ def page_plan_meetings():
         st.dataframe(
             filtered_df,
             column_config=column_config,
-            use_container_width=True,
+            width='stretch',
             hide_index=True
         )
 

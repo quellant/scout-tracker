@@ -34,7 +34,7 @@ def page_manage_requirements():
                 for adventure in sorted(adventures):
                     with st.expander(f"{adventure} ({len(required_df[required_df['Adventure'] == adventure])} requirements)"):
                         adventure_reqs = required_df[required_df["Adventure"] == adventure]
-                        st.dataframe(adventure_reqs, use_container_width=True, hide_index=True)
+                        st.dataframe(adventure_reqs, width='stretch', hide_index=True)
             else:
                 st.info("No required adventures found.")
 
@@ -46,7 +46,7 @@ def page_manage_requirements():
                 for adventure in sorted(adventures):
                     with st.expander(f"{adventure} ({len(elective_df[elective_df['Adventure'] == adventure])} requirements)"):
                         adventure_reqs = elective_df[elective_df["Adventure"] == adventure]
-                        st.dataframe(adventure_reqs, use_container_width=True, hide_index=True)
+                        st.dataframe(adventure_reqs, width='stretch', hide_index=True)
             else:
                 st.info("No elective adventures found.")
         else:
@@ -208,7 +208,7 @@ def page_manage_requirements():
                         st.error(f"❌ CSV must contain columns: {', '.join(required_cols)}")
                     else:
                         st.write(f"**Preview:** {len(imported_df)} requirements found")
-                        st.dataframe(imported_df.head(), use_container_width=True)
+                        st.dataframe(imported_df.head(), width='stretch')
 
                         if st.button("✅ Import Requirements", type="primary"):
                             if import_mode == "Replace All (clear existing)":
@@ -242,7 +242,7 @@ def page_manage_requirements():
                     data=csv,
                     file_name="scout_requirements.csv",
                     mime="text/csv",
-                    use_container_width=True
+                    width='stretch'
                 )
 
                 st.info(f"📊 {len(requirements_df)} requirements ready to export")
@@ -269,7 +269,7 @@ def page_manage_requirements():
 
             st.info(f"**{selected_rank}** has {required_count} required adventures and {elective_count} elective adventures")
 
-            if st.button(f"📥 Load {selected_rank} Requirements", type="primary", use_container_width=True):
+            if st.button(f"📥 Load {selected_rank} Requirements", type="primary", width='stretch'):
                 if st.session_state.get("confirm_load_rank", False):
                     df = pd.DataFrame(rank_reqs)
                     save_requirements(df)
@@ -288,7 +288,7 @@ def page_manage_requirements():
         col1, col2 = st.columns(2)
 
         with col1:
-            if st.button("🔄 Reset to Lion Scout Defaults", use_container_width=True):
+            if st.button("🔄 Reset to Lion Scout Defaults", width='stretch'):
                 if st.session_state.get("confirm_reset", False):
                     # Reload the default Lion requirements
                     df = pd.DataFrame(LION_REQUIREMENTS)
@@ -301,7 +301,7 @@ def page_manage_requirements():
                     st.warning("⚠️ Click again to confirm reset. This will replace ALL current requirements!")
 
         with col2:
-            if st.button("🗑️ Clear All Requirements", use_container_width=True):
+            if st.button("🗑️ Clear All Requirements", width='stretch'):
                 if st.session_state.get("confirm_clear", False):
                     empty_df = pd.DataFrame(columns=["Req_ID", "Adventure", "Requirement_Description", "Required"])
                     save_requirements(empty_df)
