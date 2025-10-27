@@ -120,8 +120,9 @@ jobs:
         mkdir -p dist/ScoutTracker_Linux
         cp -r dist/ScoutTracker/* dist/ScoutTracker_Linux/
 
-        # Create launcher script
-        cat > dist/ScoutTracker_Linux/start_scout_tracker.sh << 'EOF'
+    - name: Create launcher script
+      run: |
+        cat > dist/ScoutTracker_Linux/start_scout_tracker.sh <<'LAUNCHER'
 #!/bin/bash
 clear
 echo ""
@@ -137,11 +138,12 @@ echo "    Close this window to stop Scout Tracker"
 echo "    ========================================"
 echo ""
 ./ScoutTracker
-EOF
+LAUNCHER
         chmod +x dist/ScoutTracker_Linux/start_scout_tracker.sh
 
-        # Create README
-        cat > dist/ScoutTracker_Linux/README.txt << 'EOF'
+    - name: Create README
+      run: |
+        cat > dist/ScoutTracker_Linux/README.txt <<'README'
 SCOUT TRACKER - Linux Distribution
 ====================================
 
@@ -162,7 +164,7 @@ NO PYTHON INSTALLATION REQUIRED!
 Your data is saved in the tracker_data folder.
 
 For help: https://github.com/quellant/scout-tracker
-EOF
+README
 
     - name: Create tar.gz archive
       run: |
@@ -207,8 +209,9 @@ EOF
         mkdir -p dist/ScoutTracker_macOS
         cp -r dist/ScoutTracker/* dist/ScoutTracker_macOS/
 
-        # Create launcher script
-        cat > dist/ScoutTracker_macOS/start_scout_tracker.command << 'EOF'
+    - name: Create launcher script
+      run: |
+        cat > dist/ScoutTracker_macOS/start_scout_tracker.command <<'LAUNCHER'
 #!/bin/bash
 cd "$(dirname "$0")"
 clear
@@ -225,11 +228,12 @@ echo "    Close this window to stop Scout Tracker"
 echo "    ========================================"
 echo ""
 ./ScoutTracker
-EOF
+LAUNCHER
         chmod +x dist/ScoutTracker_macOS/start_scout_tracker.command
 
-        # Create README
-        cat > dist/ScoutTracker_macOS/README.txt << 'EOF'
+    - name: Create README
+      run: |
+        cat > dist/ScoutTracker_macOS/README.txt <<'README'
 SCOUT TRACKER - macOS Distribution
 ===================================
 
@@ -251,7 +255,7 @@ NO PYTHON INSTALLATION REQUIRED!
 Your data is saved in the tracker_data folder.
 
 For help: https://github.com/quellant/scout-tracker
-EOF
+README
 
     - name: Create ZIP archive
       run: |
