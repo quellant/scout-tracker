@@ -7,7 +7,9 @@ including attendance and requirements covered.
 
 import streamlit as st
 import pandas as pd
+from datetime import datetime
 from scout_tracker.data import load_roster, load_requirement_key, load_meetings, load_attendance
+from scout_tracker.services import generate_meeting_list_pdf
 
 
 def page_meeting_reports():
@@ -24,6 +26,40 @@ def page_meeting_reports():
     if meetings_df.empty:
         st.warning("⚠️ No meetings scheduled yet. Please create meetings to get started!")
         return
+
+    # Export button at the top
+    st.write("---")
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        if st.button("📄 Export Meeting List", type="primary", use_container_width=True):
+            try:
+                # Generate PDF
+                pdf_buffer = generate_meeting_list_pdf(
+                    meetings_df=meetings_df,
+                    roster_df=roster_df,
+                    attendance_df=attendance_df,
+                    requirement_key=requirement_key
+                )
+
+                # Generate filename with current date
+                filename = f"Meeting_List_{datetime.now().strftime('%Y%m%d')}.pdf"
+
+                # Download button
+                st.download_button(
+                    label="⬇️ Download PDF",
+                    data=pdf_buffer,
+                    file_name=filename,
+                    mime="application/pdf",
+                    use_container_width=True
+                )
+                st.success(f"✅ PDF generated successfully! Click the button above to download.")
+            except Exception as e:
+                st.error(f"❌ Error generating PDF: {str(e)}")
+
+    with col2:
+        st.info("💡 Export all meetings to a PDF with one page per meeting showing attendance and requirements covered.")
+
+    st.write("---")
 
     # Meeting selection
     meetings_df = meetings_df.sort_values("Meeting_Date", ascending=False).reset_index(drop=True)
