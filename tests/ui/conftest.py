@@ -20,6 +20,24 @@ def streamlit_app():
 
     Yields the base URL of the running app, then stops it after tests complete.
     """
+    # Initialize test data to bypass onboarding
+    import pandas as pd
+    from pathlib import Path
+
+    # Ensure tracker_data directory exists
+    data_dir = Path("tracker_data")
+    data_dir.mkdir(exist_ok=True)
+
+    # Create a minimal roster to bypass onboarding
+    roster_file = data_dir / "Roster.csv"
+    if not roster_file.exists():
+        test_roster = pd.DataFrame({
+            "Scout Name": ["Test Scout 1", "Test Scout 2"],
+            "Parent/Guardian": ["Parent 1", "Parent 2"],
+            "Contact Info": ["555-0001", "555-0002"]
+        })
+        test_roster.to_csv(roster_file, index=False)
+
     # Start Streamlit in headless mode
     process = subprocess.Popen(
         ["streamlit", "run", "app.py", "--server.headless=true", "--server.port=8501"],
@@ -60,6 +78,10 @@ def streamlit_app():
         process.wait(timeout=5)
     except subprocess.TimeoutExpired:
         process.kill()
+
+    # Clean up test data
+    if roster_file.exists():
+        roster_file.unlink()
 
 
 @pytest.fixture(scope="function")
