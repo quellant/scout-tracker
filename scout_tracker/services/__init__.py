@@ -1,22 +1,21 @@
 """
 Scout Tracker Services Package
 
-This package will contain business logic for advancement tracking including:
+This package contains business logic for advancement tracking including:
 - Advancement calculations and progress tracking
-- Report generation
+- Report generation (PDF exports)
 - Requirement completion validation
 - Statistical analysis
 
-Modules (to be implemented):
-    advancement: Core advancement tracking logic
-    reports: Report generation services
-    analytics: Statistical analysis and insights
+Modules:
+    pdf_export: PDF report generation services
+    advancement: Core advancement tracking logic (to be implemented)
+    analytics: Statistical analysis and insights (to be implemented)
 
-Future exports:
-    calculate_progress(): Calculate scout advancement progress
-    generate_report(): Generate advancement reports
-    validate_requirements(): Validate requirement completion
+Exports:
+    generate_meeting_list_pdf(): Generate PDF report of all meetings
 """
 
-# Placeholder - will be populated in future phases
-__all__ = []
+from scout_tracker.services.pdf_export import generate_meeting_list_pdf
+
+__all__ = ['generate_meeting_list_pdf']
