@@ -18,135 +18,193 @@ def create_portable_package():
 
     print(f"Creating portable package in {dist_folder}/...")
 
-    # Copy application files
-    shutil.copy("scout_tracker.py", dist_folder)
-    shutil.copy("requirements.txt", dist_folder)
-    shutil.copy("README.md", dist_folder)
+    # Create app subfolder for technical files
+    app_folder = dist_folder / "app"
+    app_folder.mkdir()
 
-    # Create launcher script
+    # Copy application files to app subfolder
+    # Copy the modular package structure
+    shutil.copytree("scout_tracker", app_folder / "scout_tracker")
+    shutil.copy("app.py", app_folder)
+    shutil.copy("requirements.txt", app_folder)
+    shutil.copy("README.md", app_folder)
+
+    # Create ONE-CLICK launcher script that handles everything
     launcher_content = """@echo off
 title Scout Tracker
-echo ========================================
-echo Scout Tracker
-echo ========================================
+color 0A
+cls
+
 echo.
-echo Starting application...
-echo The app will open in your default web browser.
-echo.
-echo To stop the application, close this window.
-echo ========================================
+echo    ========================================
+echo         SCOUT TRACKER - Starting...
+echo    ========================================
 echo.
 
 REM Check if Python is installed
 python --version >nul 2>&1
 if %errorlevel% neq 0 (
-    echo ERROR: Python is not installed or not in PATH.
+    color 0C
+    cls
     echo.
-    echo Please install Python 3.9 or higher from:
-    echo https://www.python.org/downloads/
+    echo    ========================================
+    echo         ERROR: Python Not Found
+    echo    ========================================
     echo.
-    echo Make sure to check "Add Python to PATH" during installation.
+    echo    Python is required but not installed.
+    echo.
+    echo    SOLUTION:
+    echo    1. Run "INSTALL_PYTHON.bat" in this folder
+    echo       (or manually install from python.org)
+    echo.
+    echo    2. Then run this file again
+    echo.
+    echo    ========================================
+    echo.
     pause
     exit /b 1
 )
 
-REM Install requirements if needed
-if not exist "venv" (
-    echo First time setup - Installing dependencies...
-    python -m pip install --upgrade pip
-    python -m pip install -r requirements.txt
+REM Check/install dependencies on first run
+if not exist "app\\.setup_complete" (
+    echo    Setting up Scout Tracker for first use...
+    echo    This only happens once and may take 1-2 minutes.
+    echo.
+    echo    [1/2] Updating pip...
+    python -m pip install --upgrade pip --quiet
+    echo    [2/2] Installing Scout Tracker...
+    cd app
+    python -m pip install -r requirements.txt --quiet
+    cd ..
+    echo.> app\\.setup_complete
+    echo    Setup complete!
+    echo.
 )
 
-REM Run the application
-python -m streamlit run scout_tracker.py --server.headless=false
+echo    Opening Scout Tracker in your web browser...
+echo.
+echo    ========================================
+echo    KEEP THIS WINDOW OPEN while using the app
+echo    Close this window to stop Scout Tracker
+echo    ========================================
+echo.
+
+cd app
+python -m streamlit run app.py --server.headless=false
+cd ..
 """
 
     with open(dist_folder / "START_TRACKER.bat", "w") as f:
         f.write(launcher_content)
 
-    # Create installation instructions
-    install_instructions = """# Scout Tracker - Installation Instructions
+    # Create super-simple Quick Start guide
+    quick_start = """================================================================================
+                        SCOUT TRACKER - QUICK START
+================================================================================
 
-## Quick Start (3 steps)
+HOW TO USE (2 STEPS):
 
-### Step 1: Install Python (if not already installed)
-1. Download Python 3.9 or higher from: https://www.python.org/downloads/
-2. Run the installer
-3. **IMPORTANT:** Check the box "Add Python to PATH" during installation
-4. Click "Install Now"
+  STEP 1: Install Python (ONE TIME ONLY)
+          - Double-click "INSTALL_PYTHON.bat"
+          - Follow the installer (check "Add Python to PATH")
+          - If you already have Python installed, skip this step
 
-### Step 2: Install Dependencies
-1. Double-click `INSTALL_DEPENDENCIES.bat`
-2. Wait for installation to complete
-3. Press any key to close the window
+  STEP 2: Start Scout Tracker
+          - Double-click "START_TRACKER.bat"
+          - Wait for your web browser to open
+          - Keep the black window open while using the app
 
-### Step 3: Run the Application
-1. Double-click `START_TRACKER.bat`
-2. The application will open in your web browser automatically
-3. Keep the black window open while using the app
+That's it! Everything else is automatic.
 
-## Stopping the Application
-- Close the black command window to stop the application
+================================================================================
+                              IMPORTANT NOTES
+================================================================================
 
-## Troubleshooting
+  ✓ First launch takes 1-2 minutes (one-time setup)
+  ✓ Later launches are instant
+  ✓ To STOP the app: Close the black window
+  ✓ Your data is saved in the "tracker_data" folder
 
-### "Python is not installed" error
-- Make sure Python is installed from https://www.python.org/downloads/
-- Make sure you checked "Add Python to PATH" during installation
-- Restart your computer after installing Python
+TROUBLESHOOTING:
 
-### Browser doesn't open automatically
-- Manually open your web browser and go to: http://localhost:8501
+  Problem: "Python not found" error
+  Solution: Run INSTALL_PYTHON.bat or install from python.org
 
-### Application won't start
-1. Close all black windows
-2. Double-click `START_TRACKER.bat` again
+  Problem: Browser doesn't open
+  Solution: Manually go to http://localhost:8501
 
-## Data Storage
-All your data is stored in the `tracker_data` folder in the same location as this application.
-You can back up this folder to save your data.
+  Problem: App won't start
+  Solution: Close all black windows and try again
 
-## Support
-For issues or questions, refer to the README.md file.
+================================================================================
+
+For detailed information, see README.md in the "app" folder.
+
 """
 
-    with open(dist_folder / "INSTALLATION_INSTRUCTIONS.txt", "w") as f:
-        f.write(install_instructions)
+    with open(dist_folder / "QUICK_START.txt", "w") as f:
+        f.write(quick_start)
 
-    # Create dependency installer
-    dep_installer = """@echo off
-title Installing Scout Tracker Dependencies
-echo ========================================
-echo Installing Dependencies
-echo ========================================
-echo.
-echo This will install the required packages...
-echo.
-
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+    # Create Python installer helper
+    python_installer = """@echo off
+title Install Python for Scout Tracker
+color 0B
+cls
 
 echo.
-echo ========================================
-echo Installation Complete!
-echo ========================================
+echo    ========================================
+echo         PYTHON INSTALLATION HELPER
+echo    ========================================
 echo.
-echo You can now run START_TRACKER.bat to launch the application.
+echo    This will help you download and install Python.
+echo.
+echo    IMPORTANT STEPS:
+echo    1. A web page will open in your browser
+echo    2. Click the yellow "Download Python" button
+echo    3. Run the downloaded file
+echo    4. CHECK THE BOX: "Add Python to PATH"
+echo    5. Click "Install Now"
+echo.
+echo    ========================================
+echo.
+pause
+
+REM Open Python download page
+start https://www.python.org/downloads/
+
+echo.
+echo    Browser opened! Follow the steps above.
+echo.
+echo    After installing Python:
+echo    - Restart your computer (important!)
+echo    - Then run START_TRACKER.bat
 echo.
 pause
 """
 
-    with open(dist_folder / "INSTALL_DEPENDENCIES.bat", "w") as f:
-        f.write(dep_installer)
+    with open(dist_folder / "INSTALL_PYTHON.bat", "w") as f:
+        f.write(python_installer)
 
     print(f"\n✅ Portable package created successfully!")
-    print(f"\nNext steps:")
-    print(f"1. Zip the '{dist_folder}' folder")
-    print(f"2. Distribute the zip file to users")
-    print(f"3. Users should:")
-    print(f"   - Extract the zip")
-    print(f"   - Follow INSTALLATION_INSTRUCTIONS.txt")
-    print(f"\nPackage location: {dist_folder.absolute()}")
+    print(f"\n📦 Package structure:")
+    print(f"   ScoutTracker_Portable/")
+    print(f"   ├── QUICK_START.txt          ← Users read this first")
+    print(f"   ├── START_TRACKER.bat        ← ONE-CLICK to run (auto-installs)")
+    print(f"   ├── INSTALL_PYTHON.bat       ← Helper to install Python")
+    print(f"   └── app/                     ← Technical files")
+    print(f"       ├── scout_tracker/       ← Modular package structure")
+    print(f"       ├── app.py               ← Entry point (refactored)")
+    print(f"       ├── requirements.txt")
+    print(f"       └── README.md")
+    print(f"\n📤 Distribution instructions:")
+    print(f"   1. Zip the '{dist_folder}' folder")
+    print(f"   2. Send to users")
+    print(f"   3. Users extract and double-click START_TRACKER.bat")
+    print(f"\n💡 User experience:")
+    print(f"   - First time: 1-2 minute setup (automatic)")
+    print(f"   - After that: Instant start")
+    print(f"   - No manual dependency installation needed!")
+    print(f"\n📍 Package location: {dist_folder.absolute()}")
 
 if __name__ == "__main__":
     create_portable_package()

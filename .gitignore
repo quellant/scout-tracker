@@ -3,6 +3,7 @@ tracker_data/
 
 # Distribution artifacts
 LionScoutTracker_Portable/
+ScoutTracker_Portable/
 dist/
 build/
 *.spec

@@ -29,8 +29,8 @@ Users just need to:
 
 **Advantages:**
 - ✅ Simple and reliable
-- ✅ Small download size (~50 KB)
-- ✅ Easy to update (just replace scout_tracker.py)
+- ✅ Small download size (~100 KB)
+- ✅ Easy to update (replace scout_tracker/ package and app.py)
 - ✅ Users can easily back up their data
 - ✅ Works on any Windows version
 
@@ -46,72 +46,30 @@ If you want a true `.exe` file (no Python installation required), use PyInstalle
 
 ### Prerequisites
 ```bash
-pip install pyinstaller
+pip install pyinstaller streamlit pandas
 ```
 
 ### Create the Executable
 
-Create a file called `build_spec.py`:
+The project includes pre-configured build scripts:
 
-```python
-# -*- mode: python ; coding: utf-8 -*-
-
-block_cipher = None
-
-a = Analysis(
-    ['lion_tracker.py'],
-    pathex=[],
-    binaries=[],
-    datas=[],
-    hiddenimports=[
-        'streamlit',
-        'streamlit.web.cli',
-        'streamlit.runtime.scriptrunner.magic_funcs',
-        'streamlit.runtime.scriptrunner',
-        'streamlit.runtime.state',
-        'streamlit.components.v1',
-        'altair',
-        'pyarrow',
-    ],
-    hookspath=[],
-    hooksconfig={},
-    runtime_hooks=[],
-    excludes=[],
-    win_no_prefer_redirects=False,
-    win_private_assemblies=False,
-    cipher=block_cipher,
-    noarchive=False,
-)
-
-pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
-
-exe = EXE(
-    pyz,
-    a.scripts,
-    a.binaries,
-    a.zipfiles,
-    a.datas,
-    [],
-    name='ScoutTracker',
-    debug=False,
-    bootloader_ignore_signals=False,
-    strip=False,
-    upx=True,
-    upx_exclude=[],
-    runtime_tmpdir=None,
-    console=True,
-    disable_windowed_traceback=False,
-    argv_emulation=False,
-    target_arch=None,
-    codesign_identity=None,
-    entitlements_file=None,
-)
+**On Windows:**
+```cmd
+build_exe.bat
 ```
 
-Then run:
+**On Linux/Mac:**
 ```bash
-pyinstaller build_spec.py
+./build_exe.sh
 ```
+
+The build script will:
+- Install dependencies
+- Build the executable bundle using scout_tracker.spec
+- Create user-friendly launcher scripts
+- Generate documentation (QUICK_START.txt, README.md)
+
+Output will be in `dist/ScoutTracker/` folder
 
 **Advantages:**
 - ✅ No Python installation required
