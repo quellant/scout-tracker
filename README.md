@@ -37,6 +37,105 @@ streamlit run app.py
    - **Log Attendance**: After each meeting, check off who attended
    - **Tracker Dashboard**: View each scout's progress automatically
 
+## Visual Guide
+
+### Getting Started - First-Time Setup
+
+When you first launch Scout Tracker, you'll be greeted with an interactive onboarding flow that guides you through the initial setup:
+
+#### 1. Welcome Screen - Choose Your Rank
+
+![Onboarding Welcome](media/01-onboarding-welcome.png)
+
+Select your den's rank (Lion, Tiger, Wolf, Bear, or Webelos) to automatically load the appropriate BSA requirements.
+
+#### 2. Requirements Loaded
+
+![Requirements Loaded](media/02-onboarding-requirements-loaded.png)
+
+The system confirms that all requirements for your selected rank have been loaded and are ready to use.
+
+#### 3. Add Your Scouts
+
+![Add Scouts](media/03-onboarding-add-scouts.png)
+
+Start adding scouts to your den roster. You can add as many scouts as needed.
+
+![Scouts Added](media/04-onboarding-scouts-added.png)
+
+After adding scouts, you'll see them listed and ready to track.
+
+### Managing Your Den
+
+#### Manage Roster
+
+![Manage Roster](media/05-manage-roster.png)
+
+View and manage all scouts in your den. Add new scouts or remove scouts who have moved on.
+
+#### Plan and Create Meetings
+
+![Manage Meetings](media/06-manage-meetings.png)
+
+Create meetings by specifying:
+- Meeting date
+- Meeting title/description
+- Which requirements will be covered at this meeting
+
+![Meeting Created](media/07-meeting-created.png)
+
+After creating meetings, they appear in the meetings table showing the date, title, and requirements covered.
+
+### Tracking Attendance
+
+#### Log Meeting Attendance
+
+![Log Attendance](media/09-log-attendance-initial.png)
+
+Select a meeting and mark which scouts were present. The interface shows:
+- Current attendance status
+- Easy selection of scouts who attended
+- Summary statistics
+
+![Attendance Saved - Full Attendance](media/10-attendance-saved-meeting1.png)
+
+When all scouts attend, you'll see a "Perfect attendance!" celebration message with 100% attendance rate.
+
+![Attendance Saved - Partial Attendance](media/11-attendance-saved-meeting2-partial.png)
+
+The system also clearly shows partial attendance, listing both present and absent scouts with attendance percentage.
+
+### Viewing Progress and Reports
+
+#### Tracker Dashboard
+
+![Tracker Dashboard](media/12-tracker-dashboard.png)
+
+The dashboard provides a comprehensive overview of all scouts' progress:
+- **Adventure Completion Summary**: See progress on required and elective adventures for each scout
+- **Visual Progress Bars**: Quickly identify which adventures are in progress
+- **Rank Completion Status**: Track who has completed requirements for earning their rank
+
+#### Individual Scout Reports
+
+![Individual Reports](media/13-individual-reports.png)
+
+Generate detailed reports for individual scouts showing:
+- **Progress Summary**: Required/elective completion, meetings attended, rank status
+- **Meeting Attendance History**: Full details of each meeting attended
+- **Requirements Progress**: Expandable sections showing exactly which requirements are complete
+- **Print/PDF Ready**: Easily save or print reports for parent conferences or scout advancement ceremonies
+
+#### Meeting Reports
+
+![Meeting Reports](media/14-meeting-reports.png)
+
+View comprehensive reports for each meeting including:
+- **Attendance Summary**: Who was present/absent with percentages
+- **Requirements Covered**: Full list of requirements covered at this meeting
+- **Progress Impact**: See which scouts earned which requirements
+- **Print/PDF Ready**: Save permanent records of each meeting
+
 ## Customizing for Your Den's Rank Level
 
 **The application comes pre-loaded with requirements for all Cub Scout ranks** with comprehensive pre-packaged requirements:
