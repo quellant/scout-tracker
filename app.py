@@ -49,7 +49,7 @@ if __name__ == "__main__":
             "streamlit",
             "run",
             temp_script,
-            "--server.headless=true",
+            "--server.headless=false",
             "--browser.serverAddress=localhost",
             "--server.port=8501",
             "--global.developmentMode=false"
