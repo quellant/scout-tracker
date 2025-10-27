@@ -82,20 +82,20 @@ jobs:
 
     - name: Create ZIP archive
       run: |
-        cd dist
-        powershell Compress-Archive -Path ScoutTracker_Windows -DestinationPath ScoutTracker_Windows.zip
+        cd dist/ScoutTracker_Windows
+        powershell Compress-Archive -Path * -DestinationPath ../ScoutTracker-Windows.zip
 
     - name: Upload Windows executable as artifact
       uses: actions/upload-artifact@v4
       with:
         name: ScoutTracker-Windows
-        path: dist/ScoutTracker_Windows.zip
+        path: dist/ScoutTracker-Windows.zip
 
     - name: Upload to release
       if: github.event_name == 'release'
       uses: softprops/action-gh-release@v2
       with:
-        files: dist/ScoutTracker_Windows.zip
+        files: dist/ScoutTracker-Windows.zip
         overwrite_files: true
 
   build-linux:
@@ -172,20 +172,20 @@ jobs:
 
     - name: Create tar.gz archive
       run: |
-        cd dist
-        tar -czf ScoutTracker_Linux.tar.gz ScoutTracker_Linux
+        cd dist/ScoutTracker_Linux
+        tar -czf ../ScoutTracker-Linux.tar.gz *
 
     - name: Upload Linux executable as artifact
       uses: actions/upload-artifact@v4
       with:
         name: ScoutTracker-Linux
-        path: dist/ScoutTracker_Linux.tar.gz
+        path: dist/ScoutTracker-Linux.tar.gz
 
     - name: Upload to release
       if: github.event_name == 'release'
       uses: softprops/action-gh-release@v2
       with:
-        files: dist/ScoutTracker_Linux.tar.gz
+        files: dist/ScoutTracker-Linux.tar.gz
         overwrite_files: true
 
   build-macos:
@@ -264,18 +264,18 @@ jobs:
 
     - name: Create ZIP archive
       run: |
-        cd dist
-        zip -r ScoutTracker_macOS.zip ScoutTracker_macOS
+        cd dist/ScoutTracker_macOS
+        zip -r ../ScoutTracker-macOS.zip *
 
     - name: Upload macOS executable as artifact
       uses: actions/upload-artifact@v4
       with:
         name: ScoutTracker-macOS
-        path: dist/ScoutTracker_macOS.zip
+        path: dist/ScoutTracker-macOS.zip
 
     - name: Upload to release
       if: github.event_name == 'release'
       uses: softprops/action-gh-release@v2
       with:
-        files: dist/ScoutTracker_macOS.zip
+        files: dist/ScoutTracker-macOS.zip
         overwrite_files: true
