@@ -23,27 +23,39 @@ def streamlit_app():
     # Initialize test data to bypass onboarding
     import pandas as pd
     from pathlib import Path
+    import os
+
+    # Clear any existing Streamlit cache
+    cache_dir = Path(".streamlit")
+    if cache_dir.exists():
+        shutil.rmtree(cache_dir, ignore_errors=True)
 
     # Ensure tracker_data directory exists
     data_dir = Path("tracker_data")
     data_dir.mkdir(exist_ok=True)
 
-    # Create a minimal roster to bypass onboarding
+    # Create a minimal roster to bypass onboarding (only Scout Name column)
     roster_file = data_dir / "Roster.csv"
-    if not roster_file.exists():
-        test_roster = pd.DataFrame({
-            "Scout Name": ["Test Scout 1", "Test Scout 2"],
-            "Parent/Guardian": ["Parent 1", "Parent 2"],
-            "Contact Info": ["555-0001", "555-0002"]
-        })
-        test_roster.to_csv(roster_file, index=False)
+    test_roster = pd.DataFrame({
+        "Scout Name": ["Test Scout 1", "Test Scout 2"]
+    })
+    test_roster.to_csv(roster_file, index=False)
+
+    # Force file system sync
+    os.sync() if hasattr(os, 'sync') else None
+
+    # Set environment variable to force cache clearing
+    env = os.environ.copy()
+    env["STREAMLIT_SERVER_ENABLE_STATIC_SERVING"] = "false"
 
     # Start Streamlit in headless mode
     process = subprocess.Popen(
-        ["streamlit", "run", "app.py", "--server.headless=true", "--server.port=8501"],
+        ["streamlit", "run", "app.py", "--server.headless=true", "--server.port=8501",
+         "--server.enableCORS=false", "--server.enableXsrfProtection=false"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        text=True
+        text=True,
+        env=env
     )
 
     # Wait for the app to start
@@ -67,8 +79,8 @@ def streamlit_app():
         process.kill()
         raise RuntimeError("Streamlit app failed to start within 30 seconds")
 
-    # Give it a moment to fully initialize
-    time.sleep(2)
+    # Give it extra time to fully initialize and load data
+    time.sleep(5)
 
     yield "http://localhost:8501"
 
