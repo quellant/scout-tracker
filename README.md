@@ -157,7 +157,34 @@ All your data is stored in simple CSV files, which means you can:
 
 ## License
 
-This is a tool for Cub Scout den leaders. All BSA program content remains property of Scouting America.
+This project is licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License** (CC BY-NC-SA 4.0).
+
+### You are free to:
+
+- ✅ **Use** - Use this software for personal, educational, or non-profit purposes
+- ✅ **Share** - Copy and redistribute the material in any medium or format
+- ✅ **Adapt** - Remix, transform, and build upon the material
+
+### Under the following terms:
+
+- **Attribution** - You must give appropriate credit, provide a link to the license, and indicate if changes were made
+- **NonCommercial** - You may not use the material for commercial purposes or monetary gain
+- **ShareAlike** - If you remix, transform, or build upon the material, you must distribute your contributions under the same license
+
+### What this means:
+
+- ✅ Perfect for scout leaders, dens, packs, and troops
+- ✅ Schools and educational organizations can use it freely
+- ✅ You can modify it for your specific needs
+- ✅ You can share your improvements with others
+- ❌ Cannot be sold or used in paid products/services
+- ❌ Cannot be included in commercial software
+
+See the [LICENSE](LICENSE) file for the complete legal text.
+
+### Note on BSA Content
+
+All BSA program content, adventure names, and requirement descriptions remain the intellectual property of Scouting America (formerly Boy Scouts of America). This license applies to the software implementation only.
 
 ## Support
 
