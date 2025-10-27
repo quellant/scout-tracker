@@ -10,6 +10,9 @@ on:
         required: true
         default: '1.0.0'
 
+permissions:
+  contents: write  # Required for creating/updating releases
+
 jobs:
   build-windows:
     runs-on: windows-latest
@@ -93,6 +96,7 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         files: dist/ScoutTracker_Windows.zip
+        overwrite_files: true
 
   build-linux:
     runs-on: ubuntu-latest
@@ -182,6 +186,7 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         files: dist/ScoutTracker_Linux.tar.gz
+        overwrite_files: true
 
   build-macos:
     runs-on: macos-latest
@@ -273,3 +278,4 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         files: dist/ScoutTracker_macOS.zip
+        overwrite_files: true
