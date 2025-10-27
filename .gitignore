@@ -6,7 +6,6 @@ LionScoutTracker_Portable/
 ScoutTracker_Portable/
 dist/
 build/
-*.spec
 
 # Python
 __pycache__/
