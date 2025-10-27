@@ -81,16 +81,16 @@ jobs:
         echo 'For help: https://github.com/quellant/scout-tracker' >> dist/ScoutTracker_Windows/README.txt
       shell: bash
 
-    - name: Create ZIP archive
-      run: |
-        cd dist/ScoutTracker_Windows
-        powershell Compress-Archive -Path * -DestinationPath ../ScoutTracker-Windows.zip
-
     - name: Upload Windows executable as artifact
       uses: actions/upload-artifact@v4
       with:
         name: ScoutTracker-Windows
-        path: dist/ScoutTracker-Windows.zip
+        path: dist/ScoutTracker_Windows/
+
+    - name: Create ZIP archive for release
+      run: |
+        cd dist/ScoutTracker_Windows
+        powershell Compress-Archive -Path * -DestinationPath ../ScoutTracker-Windows.zip
 
     - name: Upload to release
       if: github.event_name == 'release'
@@ -172,16 +172,16 @@ jobs:
           echo 'For help: https://github.com/quellant/scout-tracker'
         } > dist/ScoutTracker_Linux/README.txt
 
-    - name: Create tar.gz archive
-      run: |
-        cd dist/ScoutTracker_Linux
-        tar -czf ../ScoutTracker-Linux.tar.gz *
-
     - name: Upload Linux executable as artifact
       uses: actions/upload-artifact@v4
       with:
         name: ScoutTracker-Linux
-        path: dist/ScoutTracker-Linux.tar.gz
+        path: dist/ScoutTracker_Linux/
+
+    - name: Create tar.gz archive for release
+      run: |
+        cd dist/ScoutTracker_Linux
+        tar -czf ../ScoutTracker-Linux.tar.gz *
 
     - name: Upload to release
       if: github.event_name == 'release'
@@ -265,16 +265,16 @@ jobs:
           echo 'For help: https://github.com/quellant/scout-tracker'
         } > dist/ScoutTracker_macOS/README.txt
 
-    - name: Create ZIP archive
-      run: |
-        cd dist/ScoutTracker_macOS
-        zip -r ../ScoutTracker-macOS.zip *
-
     - name: Upload macOS executable as artifact
       uses: actions/upload-artifact@v4
       with:
         name: ScoutTracker-macOS
-        path: dist/ScoutTracker-macOS.zip
+        path: dist/ScoutTracker_macOS/
+
+    - name: Create ZIP archive for release
+      run: |
+        cd dist/ScoutTracker_macOS
+        zip -r ../ScoutTracker-macOS.zip *
 
     - name: Upload to release
       if: github.event_name == 'release'
