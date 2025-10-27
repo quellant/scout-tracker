@@ -25,33 +25,53 @@ def streamlit_app():
     from pathlib import Path
     import os
 
-    # Clear any existing Streamlit cache
+    # Clean up any existing cache and data directories
     cache_dir = Path(".streamlit")
     if cache_dir.exists():
         shutil.rmtree(cache_dir, ignore_errors=True)
 
-    # Ensure tracker_data directory exists
     data_dir = Path("tracker_data")
-    data_dir.mkdir(exist_ok=True)
+    if data_dir.exists():
+        shutil.rmtree(data_dir, ignore_errors=True)
 
-    # Create a minimal roster to bypass onboarding (only Scout Name column)
+    # Create fresh data directory
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    # Create test roster with scout data (BEFORE starting Streamlit)
     roster_file = data_dir / "Roster.csv"
     test_roster = pd.DataFrame({
         "Scout Name": ["Test Scout 1", "Test Scout 2"]
     })
     test_roster.to_csv(roster_file, index=False)
 
-    # Force file system sync
-    os.sync() if hasattr(os, 'sync') else None
+    # Force file write to complete
+    if hasattr(os, 'sync'):
+        os.sync()
+    else:
+        # On Windows, flush file system buffers
+        import ctypes
+        try:
+            ctypes.windll.kernel32.SetFileApisToOEM()
+        except:
+            pass
 
-    # Set environment variable to force cache clearing
+    # Extra wait to ensure files are fully written
+    time.sleep(1)
+
+    # Set environment to disable caching during tests
     env = os.environ.copy()
-    env["STREAMLIT_SERVER_ENABLE_STATIC_SERVING"] = "false"
+    env["STREAMLIT_SERVER_FILE_WATCHER_TYPE"] = "none"  # Disable file watcher
+    env["STREAMLIT_BROWSER_GATHER_USAGE_STATS"] = "false"
 
     # Start Streamlit in headless mode
     process = subprocess.Popen(
-        ["streamlit", "run", "app.py", "--server.headless=true", "--server.port=8501",
-         "--server.enableCORS=false", "--server.enableXsrfProtection=false"],
+        ["streamlit", "run", "app.py",
+         "--server.headless=true",
+         "--server.port=8501",
+         "--server.enableCORS=false",
+         "--server.enableXsrfProtection=false",
+         "--server.fileWatcherType=none",
+         "--client.showErrorDetails=true"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
