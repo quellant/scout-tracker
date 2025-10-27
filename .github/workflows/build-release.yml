@@ -74,7 +74,7 @@ jobs:
         echo '' >> dist/ScoutTracker_Windows/README.txt
         echo 'Your data is saved in the tracker_data folder.' >> dist/ScoutTracker_Windows/README.txt
         echo '' >> dist/ScoutTracker_Windows/README.txt
-        echo 'For help: https://github.com/RobertCoop/scout-tracker' >> dist/ScoutTracker_Windows/README.txt
+        echo 'For help: https://github.com/quellant/scout-tracker' >> dist/ScoutTracker_Windows/README.txt
       shell: bash
 
     - name: Create ZIP archive
@@ -90,14 +90,9 @@ jobs:
 
     - name: Upload to release
       if: github.event_name == 'release'
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v2
       with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./dist/ScoutTracker_Windows.zip
-        asset_name: ScoutTracker-Windows.zip
-        asset_content_type: application/zip
+        files: dist/ScoutTracker_Windows.zip
 
   build-linux:
     runs-on: ubuntu-latest
@@ -166,7 +161,7 @@ NO PYTHON INSTALLATION REQUIRED!
 
 Your data is saved in the tracker_data folder.
 
-For help: https://github.com/RobertCoop/scout-tracker
+For help: https://github.com/quellant/scout-tracker
 EOF
 
     - name: Create tar.gz archive
@@ -182,14 +177,9 @@ EOF
 
     - name: Upload to release
       if: github.event_name == 'release'
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v2
       with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./dist/ScoutTracker_Linux.tar.gz
-        asset_name: ScoutTracker-Linux.tar.gz
-        asset_content_type: application/gzip
+        files: dist/ScoutTracker_Linux.tar.gz
 
   build-macos:
     runs-on: macos-latest
@@ -260,7 +250,7 @@ NO PYTHON INSTALLATION REQUIRED!
 
 Your data is saved in the tracker_data folder.
 
-For help: https://github.com/RobertCoop/scout-tracker
+For help: https://github.com/quellant/scout-tracker
 EOF
 
     - name: Create ZIP archive
@@ -276,11 +266,6 @@ EOF
 
     - name: Upload to release
       if: github.event_name == 'release'
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v2
       with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./dist/ScoutTracker_macOS.zip
-        asset_name: ScoutTracker-macOS.zip
-        asset_content_type: application/zip
+        files: dist/ScoutTracker_macOS.zip

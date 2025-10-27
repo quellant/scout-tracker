@@ -41,7 +41,7 @@ This creates the tag, but you still need to create the release on GitHub (next s
 
 ### Method 2: Using GitHub Web Interface
 
-1. Go to your repository: https://github.com/RobertCoop/scout-tracker
+1. Go to your repository: https://github.com/quellant/scout-tracker
 2. Click **Releases** (right sidebar)
 3. Click **Create a new release**
 4. Click **Choose a tag** → Type `v1.0.0` → Click **Create new tag on publish**
@@ -93,7 +93,7 @@ Choose the download for your operating system:
 
 ## 🐛 Known Issues
 
-None currently. Please report issues at: https://github.com/RobertCoop/scout-tracker/issues
+None currently. Please report issues at: https://github.com/quellant/scout-tracker/issues
 
 ## 📄 License
 
@@ -124,7 +124,7 @@ You can watch the progress:
 
 ### Check Build Status
 
-1. Go to: https://github.com/RobertCoop/scout-tracker/actions
+1. Go to: https://github.com/quellant/scout-tracker/actions
 2. Find your release workflow (will be named after your release)
 3. Click to see detailed build logs
 
@@ -133,7 +133,7 @@ You can watch the progress:
 Add to README.md to show build status:
 
 ```markdown
-![Build Status](https://github.com/RobertCoop/scout-tracker/actions/workflows/build-release.yml/badge.svg)
+![Build Status](https://github.com/quellant/scout-tracker/actions/workflows/build-release.yml/badge.svg)
 ```
 
 ---
@@ -261,4 +261,4 @@ git push origin v1.0.0
 
 ---
 
-**Need help?** Open an issue at: https://github.com/RobertCoop/scout-tracker/issues
+**Need help?** Open an issue at: https://github.com/quellant/scout-tracker/issues
