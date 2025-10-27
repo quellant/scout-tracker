@@ -2,6 +2,44 @@
 
 A local web application designed to help Cub Scout den leaders track advancement for any rank level (Lion, Tiger, Wolf, Bear, Webelos).
 
+## 🚀 Quick Start (No Python Required!)
+
+**Download the standalone application** - No installation needed!
+
+### Windows Users
+
+1. **Download** `ScoutTracker-Windows.zip` from the [latest release](https://github.com/quellant/scout-tracker/releases)
+2. **Extract** the ZIP file to any folder
+3. **Double-click** `START_SCOUT_TRACKER.bat`
+4. Your web browser will automatically open Scout Tracker
+5. **Keep the black window open** while using the app
+
+### Mac Users
+
+1. **Download** `ScoutTracker-macOS.zip` from the [latest release](https://github.com/quellant/scout-tracker/releases)
+2. **Extract** the ZIP file to any folder
+3. **Double-click** `start_scout_tracker.command`
+   - If you see a security warning:
+     - Right-click → Choose "Open"
+     - Click "Open" in the dialog
+4. Your web browser will automatically open Scout Tracker
+5. **Keep the terminal window open** while using the app
+
+### Linux Users
+
+1. **Download** `ScoutTracker-Linux.tar.gz` from the [latest release](https://github.com/quellant/scout-tracker/releases)
+2. **Extract**: `tar -xzf ScoutTracker-Linux.tar.gz`
+3. **Make executable** (first time only): `chmod +x start_scout_tracker.sh`
+4. **Run**: `./start_scout_tracker.sh`
+5. Your web browser will automatically open Scout Tracker
+6. **Keep the terminal window open** while using the app
+
+---
+
+**Your data is saved locally** in the `tracker_data` folder within the application directory. Back it up regularly!
+
+---
+
 ## Features
 
 - **Roster Management**: Add and remove scouts from your den
@@ -12,7 +50,9 @@ A local web application designed to help Cub Scout den leaders track advancement
 - **Visual Dashboard**: Progress bars showing completion percentage for each adventure
 - **Individual Scout Reports**: Detailed progress reports with meeting attendance and completion tracking
 
-## Installation
+## Installation (For Developers)
+
+**Note:** Most users should use the [Quick Start](#-quick-start-no-python-required) guide above to download the standalone executable. This section is for developers who want to run from source.
 
 1. Ensure you have Python 3.9 or higher installed
 
@@ -21,7 +61,7 @@ A local web application designed to help Cub Scout den leaders track advancement
 pip install -r requirements.txt
 ```
 
-## Usage
+## Usage (Running from Source)
 
 1. Start the application:
 ```bash
