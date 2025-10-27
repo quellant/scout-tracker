@@ -28,3 +28,12 @@ env/
 # OS
 .DS_Store
 Thumbs.db
+
+# Test coverage
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+
+# Playwright recordings
+.playwright-mcp/

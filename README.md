@@ -25,7 +25,7 @@ pip install -r requirements.txt
 
 1. Start the application:
 ```bash
-streamlit run scout_tracker.py
+streamlit run app.py
 ```
 
 2. Open your web browser to the URL shown (typically `http://localhost:8501`)
