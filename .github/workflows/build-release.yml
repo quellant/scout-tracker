@@ -122,49 +122,49 @@ jobs:
 
     - name: Create launcher script
       run: |
-        cat > dist/ScoutTracker_Linux/start_scout_tracker.sh <<'LAUNCHER'
-#!/bin/bash
-clear
-echo ""
-echo "    ========================================"
-echo "         SCOUT TRACKER - Starting..."
-echo "    ========================================"
-echo ""
-echo "    Opening Scout Tracker in your web browser..."
-echo ""
-echo "    ========================================"
-echo "    KEEP THIS WINDOW OPEN while using the app"
-echo "    Close this window to stop Scout Tracker"
-echo "    ========================================"
-echo ""
-./ScoutTracker
-LAUNCHER
+        {
+          echo '#!/bin/bash'
+          echo 'clear'
+          echo 'echo ""'
+          echo 'echo "    ========================================"'
+          echo 'echo "         SCOUT TRACKER - Starting..."'
+          echo 'echo "    ========================================"'
+          echo 'echo ""'
+          echo 'echo "    Opening Scout Tracker in your web browser..."'
+          echo 'echo ""'
+          echo 'echo "    ========================================"'
+          echo 'echo "    KEEP THIS WINDOW OPEN while using the app"'
+          echo 'echo "    Close this window to stop Scout Tracker"'
+          echo 'echo "    ========================================"'
+          echo 'echo ""'
+          echo './ScoutTracker'
+        } > dist/ScoutTracker_Linux/start_scout_tracker.sh
         chmod +x dist/ScoutTracker_Linux/start_scout_tracker.sh
 
     - name: Create README
       run: |
-        cat > dist/ScoutTracker_Linux/README.txt <<'README'
-SCOUT TRACKER - Linux Distribution
-====================================
-
-QUICK START:
-
-  1. Make the launcher executable (first time only):
-     chmod +x start_scout_tracker.sh
-
-  2. Run the launcher:
-     ./start_scout_tracker.sh
-
-  3. Wait for your web browser to open
-
-  4. Keep the terminal window open while using the app
-
-NO PYTHON INSTALLATION REQUIRED!
-
-Your data is saved in the tracker_data folder.
-
-For help: https://github.com/quellant/scout-tracker
-README
+        {
+          echo 'SCOUT TRACKER - Linux Distribution'
+          echo '===================================='
+          echo ''
+          echo 'QUICK START:'
+          echo ''
+          echo '  1. Make the launcher executable (first time only):'
+          echo '     chmod +x start_scout_tracker.sh'
+          echo ''
+          echo '  2. Run the launcher:'
+          echo '     ./start_scout_tracker.sh'
+          echo ''
+          echo '  3. Wait for your web browser to open'
+          echo ''
+          echo '  4. Keep the terminal window open while using the app'
+          echo ''
+          echo 'NO PYTHON INSTALLATION REQUIRED!'
+          echo ''
+          echo 'Your data is saved in the tracker_data folder.'
+          echo ''
+          echo 'For help: https://github.com/quellant/scout-tracker'
+        } > dist/ScoutTracker_Linux/README.txt
 
     - name: Create tar.gz archive
       run: |
@@ -211,51 +211,51 @@ README
 
     - name: Create launcher script
       run: |
-        cat > dist/ScoutTracker_macOS/start_scout_tracker.command <<'LAUNCHER'
-#!/bin/bash
-cd "$(dirname "$0")"
-clear
-echo ""
-echo "    ========================================"
-echo "         SCOUT TRACKER - Starting..."
-echo "    ========================================"
-echo ""
-echo "    Opening Scout Tracker in your web browser..."
-echo ""
-echo "    ========================================"
-echo "    KEEP THIS WINDOW OPEN while using the app"
-echo "    Close this window to stop Scout Tracker"
-echo "    ========================================"
-echo ""
-./ScoutTracker
-LAUNCHER
+        {
+          echo '#!/bin/bash'
+          echo 'cd "$(dirname "$0")"'
+          echo 'clear'
+          echo 'echo ""'
+          echo 'echo "    ========================================"'
+          echo 'echo "         SCOUT TRACKER - Starting..."'
+          echo 'echo "    ========================================"'
+          echo 'echo ""'
+          echo 'echo "    Opening Scout Tracker in your web browser..."'
+          echo 'echo ""'
+          echo 'echo "    ========================================"'
+          echo 'echo "    KEEP THIS WINDOW OPEN while using the app"'
+          echo 'echo "    Close this window to stop Scout Tracker"'
+          echo 'echo "    ========================================"'
+          echo 'echo ""'
+          echo './ScoutTracker'
+        } > dist/ScoutTracker_macOS/start_scout_tracker.command
         chmod +x dist/ScoutTracker_macOS/start_scout_tracker.command
 
     - name: Create README
       run: |
-        cat > dist/ScoutTracker_macOS/README.txt <<'README'
-SCOUT TRACKER - macOS Distribution
-===================================
-
-QUICK START:
-
-  1. Double-click start_scout_tracker.command
-
-  2. If you get a security warning:
-     - Right-click start_scout_tracker.command
-     - Choose "Open"
-     - Click "Open" in the dialog
-
-  3. Wait for your web browser to open
-
-  4. Keep the terminal window open while using the app
-
-NO PYTHON INSTALLATION REQUIRED!
-
-Your data is saved in the tracker_data folder.
-
-For help: https://github.com/quellant/scout-tracker
-README
+        {
+          echo 'SCOUT TRACKER - macOS Distribution'
+          echo '==================================='
+          echo ''
+          echo 'QUICK START:'
+          echo ''
+          echo '  1. Double-click start_scout_tracker.command'
+          echo ''
+          echo '  2. If you get a security warning:'
+          echo '     - Right-click start_scout_tracker.command'
+          echo '     - Choose "Open"'
+          echo '     - Click "Open" in the dialog'
+          echo ''
+          echo '  3. Wait for your web browser to open'
+          echo ''
+          echo '  4. Keep the terminal window open while using the app'
+          echo ''
+          echo 'NO PYTHON INSTALLATION REQUIRED!'
+          echo ''
+          echo 'Your data is saved in the tracker_data folder.'
+          echo ''
+          echo 'For help: https://github.com/quellant/scout-tracker'
+        } > dist/ScoutTracker_macOS/README.txt
 
     - name: Create ZIP archive
       run: |
