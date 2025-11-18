@@ -8,6 +8,8 @@ source = scout_tracker
 omit =
     # UI pages require Playwright/browser testing
     scout_tracker/ui/*
+    # PDF generation service (visual output, difficult to unit test)
+    scout_tracker/services/pdf_export.py
     # App entrypoint
     scout_tracker/__main__.py
     # Test files
