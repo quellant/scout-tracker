@@ -30,7 +30,7 @@ def initialize_data_files():
 
     # Initialize Meetings.csv
     if not config.MEETINGS_FILE.exists():
-        df = pd.DataFrame(columns=["Meeting_Date", "Meeting_Title", "Req_IDs_Covered"])
+        df = pd.DataFrame(columns=["Meeting_Date", "Meeting_Title", "Req_IDs_Covered", "Optional"])
         df.to_csv(config.MEETINGS_FILE, index=False)
 
     # Initialize Meeting_Attendance.csv
@@ -66,8 +66,11 @@ def load_meetings():
         df = pd.read_csv(config.MEETINGS_FILE)
         if not df.empty:
             df["Meeting_Date"] = pd.to_datetime(df["Meeting_Date"])
+            # Add Optional column if it doesn't exist (backwards compatibility)
+            if "Optional" not in df.columns:
+                df["Optional"] = False
         return df
-    return pd.DataFrame(columns=["Meeting_Date", "Meeting_Title", "Req_IDs_Covered"])
+    return pd.DataFrame(columns=["Meeting_Date", "Meeting_Title", "Req_IDs_Covered", "Optional"])
 
 
 @st.cache_data
