@@ -6,7 +6,9 @@ This module contains the UI for viewing detailed individual scout progress repor
 
 import streamlit as st
 import pandas as pd
+from datetime import datetime
 from scout_tracker.data import load_roster, load_requirement_key, load_meetings, load_attendance
+from scout_tracker.services.pdf_export import generate_scout_progress_report
 
 
 def page_individual_scout_reports():
@@ -30,6 +32,33 @@ def page_individual_scout_reports():
 
     if not selected_scout:
         return
+
+    # PDF Export button
+    col1, col2 = st.columns([1, 5])
+    with col1:
+        if st.button("📄 Export PDF", help="Download a comprehensive progress report for this scout"):
+            with st.spinner("Generating PDF report..."):
+                try:
+                    pdf_buffer = generate_scout_progress_report(
+                        selected_scout,
+                        roster_df,
+                        requirement_key,
+                        meetings_df,
+                        attendance_df
+                    )
+
+                    # Generate filename with scout name and date
+                    filename = f"ScoutProgress_{selected_scout.replace(' ', '_')}_{datetime.now().strftime('%Y%m%d')}.pdf"
+
+                    st.download_button(
+                        label="⬇️ Download Report",
+                        data=pdf_buffer,
+                        file_name=filename,
+                        mime="application/pdf"
+                    )
+                    st.success("PDF report generated successfully!")
+                except Exception as e:
+                    st.error(f"Error generating PDF: {str(e)}")
 
     st.write("---")
 

@@ -7,7 +7,11 @@ Shows progress for all scouts in the den.
 
 import streamlit as st
 import pandas as pd
+import zipfile
+import io
+from datetime import datetime
 from scout_tracker.data import load_roster, load_requirement_key, load_meetings, load_attendance
+from scout_tracker.services.pdf_export import generate_scout_progress_report
 
 
 def page_tracker_dashboard():
@@ -24,6 +28,55 @@ def page_tracker_dashboard():
     if roster_df.empty:
         st.warning("⚠️ No scouts in the roster yet. Please add scouts to get started!")
         return
+
+    # ========================================================================
+    # BULK PDF EXPORT
+    # ========================================================================
+
+    st.subheader("📦 Bulk Export Progress Reports")
+    st.write("Generate PDF progress reports for all scouts to send to parents.")
+
+    col1, col2, col3 = st.columns([1, 1, 4])
+
+    with col1:
+        if st.button("📄 Export All PDFs", help="Generate individual progress reports for all scouts"):
+            with st.spinner(f"Generating {len(roster_df)} PDF reports..."):
+                try:
+                    # Create a ZIP file containing all PDFs
+                    zip_buffer = io.BytesIO()
+
+                    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+                        for scout_name in roster_df["Scout Name"]:
+                            # Generate PDF for this scout
+                            pdf_buffer = generate_scout_progress_report(
+                                scout_name,
+                                roster_df,
+                                requirement_key,
+                                meetings_df,
+                                attendance_df
+                            )
+
+                            # Add to ZIP with sanitized filename
+                            filename = f"ScoutProgress_{scout_name.replace(' ', '_')}.pdf"
+                            zip_file.writestr(filename, pdf_buffer.getvalue())
+
+                    zip_buffer.seek(0)
+
+                    # Generate ZIP filename with date
+                    zip_filename = f"ScoutProgressReports_{datetime.now().strftime('%Y%m%d')}.zip"
+
+                    st.download_button(
+                        label="⬇️ Download All Reports (ZIP)",
+                        data=zip_buffer,
+                        file_name=zip_filename,
+                        mime="application/zip"
+                    )
+                    st.success(f"Successfully generated {len(roster_df)} PDF reports!")
+
+                except Exception as e:
+                    st.error(f"Error generating PDFs: {str(e)}")
+
+    st.write("---")
 
     # Build master tracker DataFrame
     scouts = roster_df["Scout Name"].tolist()
