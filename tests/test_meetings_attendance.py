@@ -28,7 +28,7 @@ def test_load_meetings_empty_file(test_data_dir):
     meetings_df = scout_tracker.load_meetings()
 
     assert meetings_df.empty
-    assert list(meetings_df.columns) == ["Meeting_Date", "Meeting_Title", "Req_IDs_Covered"]
+    assert list(meetings_df.columns) == ["Meeting_Date", "Meeting_Title", "Req_IDs_Covered", "Optional"]
 
 
 @pytest.mark.unit
