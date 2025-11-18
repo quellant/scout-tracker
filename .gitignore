@@ -1,6 +1,5 @@
 # User data
-tracker_data/
-tracker_data_backup*/
+tracker_data*/
 
 # Distribution artifacts
 LionScoutTracker_Portable/
