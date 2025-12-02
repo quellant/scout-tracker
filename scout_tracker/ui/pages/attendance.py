@@ -67,6 +67,10 @@ def page_log_attendance():
         attendance_df["Meeting_Date"] == selected_date
     ]["Scout_Name"].tolist()
 
+    # Filter out scouts who are no longer in the roster
+    active_scouts = roster_df["Scout Name"].tolist()
+    current_attendees = [scout for scout in current_attendees if scout in active_scouts]
+
     # Show attendance status
     total_scouts = len(roster_df)
     attendance_count = len(current_attendees)

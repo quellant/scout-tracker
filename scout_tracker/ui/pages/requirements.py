@@ -32,9 +32,22 @@ def page_manage_requirements():
             if not required_df.empty:
                 adventures = required_df["Adventure"].unique()
                 for adventure in sorted(adventures):
-                    with st.expander(f"{adventure} ({len(required_df[required_df['Adventure'] == adventure])} requirements)"):
-                        adventure_reqs = required_df[required_df["Adventure"] == adventure]
-                        st.dataframe(adventure_reqs, width='stretch', hide_index=True)
+                    adventure_reqs = required_df[required_df["Adventure"] == adventure]
+                    # Get URL for the adventure (from first requirement)
+                    adventure_url = adventure_reqs.iloc[0].get("URL", "") if not adventure_reqs.empty else ""
+
+                    # Show adventure name and link separately to avoid click conflicts
+                    col1, col2 = st.columns([3, 1])
+                    with col1:
+                        header = f"{adventure} ({len(adventure_reqs)} requirements)"
+                    with col2:
+                        if adventure_url:
+                            st.markdown(f"[📖 View on BSA Website]({adventure_url})")
+
+                    with st.expander(header):
+                        # Show requirements without URL column in dataframe
+                        display_cols = ["Req_ID", "Adventure", "Requirement_Description", "Required"]
+                        st.dataframe(adventure_reqs[display_cols], width='stretch', hide_index=True)
             else:
                 st.info("No required adventures found.")
 
@@ -44,9 +57,22 @@ def page_manage_requirements():
             if not elective_df.empty:
                 adventures = elective_df["Adventure"].unique()
                 for adventure in sorted(adventures):
-                    with st.expander(f"{adventure} ({len(elective_df[elective_df['Adventure'] == adventure])} requirements)"):
-                        adventure_reqs = elective_df[elective_df["Adventure"] == adventure]
-                        st.dataframe(adventure_reqs, width='stretch', hide_index=True)
+                    adventure_reqs = elective_df[elective_df["Adventure"] == adventure]
+                    # Get URL for the adventure (from first requirement)
+                    adventure_url = adventure_reqs.iloc[0].get("URL", "") if not adventure_reqs.empty else ""
+
+                    # Show adventure name and link separately to avoid click conflicts
+                    col1, col2 = st.columns([3, 1])
+                    with col1:
+                        header = f"{adventure} ({len(adventure_reqs)} requirements)"
+                    with col2:
+                        if adventure_url:
+                            st.markdown(f"[📖 View on BSA Website]({adventure_url})")
+
+                    with st.expander(header):
+                        # Show requirements without URL column in dataframe
+                        display_cols = ["Req_ID", "Adventure", "Requirement_Description", "Required"]
+                        st.dataframe(adventure_reqs[display_cols], width='stretch', hide_index=True)
             else:
                 st.info("No elective adventures found.")
         else:
@@ -76,6 +102,11 @@ def page_manage_requirements():
                 value=False,
                 help="Check if this is a required adventure (must complete all required adventures). Uncheck for elective adventures (must complete any 2)."
             )
+            new_url = st.text_input(
+                "Reference URL (optional)",
+                placeholder="https://www.scouting.org/cub-scout-adventures/...",
+                help="Link to BSA website or other reference material for this requirement"
+            )
 
             submit_add = st.form_submit_button("Add Requirement")
 
@@ -90,7 +121,8 @@ def page_manage_requirements():
                         "Req_ID": [new_req_id],
                         "Adventure": [new_adventure],
                         "Requirement_Description": [new_description],
-                        "Required": [new_required]
+                        "Required": [new_required],
+                        "URL": [new_url.strip()]
                     })
                     requirements_df = pd.concat([requirements_df, new_row], ignore_index=True)
                     save_requirements(requirements_df)
@@ -134,6 +166,12 @@ def page_manage_requirements():
                         value=bool(current_req["Required"]),
                         help="Check if this is a required adventure (must complete all required adventures). Uncheck for elective adventures (must complete any 2)."
                     )
+                    edit_url = st.text_input(
+                        "Reference URL (optional)",
+                        value=current_req.get("URL", ""),
+                        placeholder="https://www.scouting.org/cub-scout-adventures/...",
+                        help="Link to BSA website or other reference material for this requirement"
+                    )
 
                     submit_edit = st.form_submit_button("Save Changes")
 
@@ -141,8 +179,8 @@ def page_manage_requirements():
                         # Update the requirement
                         requirements_df.loc[
                             requirements_df["Req_ID"] == selected_req_id,
-                            ["Adventure", "Requirement_Description", "Required"]
-                        ] = [edit_adventure, edit_description, edit_required]
+                            ["Adventure", "Requirement_Description", "Required", "URL"]
+                        ] = [edit_adventure, edit_description, edit_required, edit_url.strip()]
                         save_requirements(requirements_df)
                         st.success(f"✅ Updated requirement {selected_req_id}!")
                         st.rerun()
