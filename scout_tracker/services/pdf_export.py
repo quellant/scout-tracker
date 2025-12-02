@@ -35,14 +35,16 @@ def generate_meeting_list_pdf(meetings_df, roster_df, attendance_df, requirement
     # Create a buffer to hold the PDF
     buffer = io.BytesIO()
 
-    # Create the PDF document
+    # Create the PDF document with metadata
     doc = SimpleDocTemplate(
         buffer,
         pagesize=letter,
         rightMargin=0.75*inch,
         leftMargin=0.75*inch,
         topMargin=0.75*inch,
-        bottomMargin=0.75*inch
+        bottomMargin=0.75*inch,
+        title="Den Progress Report",
+        author="Scout Tracker"
     )
 
     # Get all scouts
@@ -280,12 +282,40 @@ def generate_meeting_list_pdf(meetings_df, roster_df, attendance_df, requirement
     elements.append(Paragraph("Adventures We've Worked On", heading_style))
 
     adventures_desc = Paragraph(
-        "<i><b>COMPLETE</b> = The den covered all requirements for this adventure at meetings. "
-        "<b>X/Y covered</b> = The den has worked on some requirements. "
-        "<b>Not started</b> = We haven't covered this adventure yet at den meetings.</i>",
+        "<i>This shows our <b>den's meeting schedule progress</b> - what we've covered together so far. "
+        "Adventures shown as 'In Progress' are ones we're still working through as a den - "
+        "there's nothing for your scout to 'make up.' Individual scout progress depends on which "
+        "meetings they attended and is shown in their personalized Scout Progress Report.</i>",
         small_style
     )
-    elements.append(adventures_desc)
+    adventures_desc_table = Table([[adventures_desc]], colWidths=[6.5*inch])
+    adventures_desc_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor('#f8fafc')),
+        ('PADDING', (0, 0), (-1, -1), 10),
+    ]))
+    elements.append(adventures_desc_table)
+    elements.append(Spacer(1, 0.15*inch))
+
+    # Legend
+    legend_style = ParagraphStyle(
+        'LegendStyle',
+        parent=styles['BodyText'],
+        fontSize=8,
+        leading=10
+    )
+    legend_items = [
+        [Paragraph("<b>Legend:</b>", legend_style),
+         Paragraph("<font color='#166534'>●</font> <b>Complete</b> - Den covered all requirements", legend_style),
+         Paragraph("<font color='#1d4ed8'>●</font> <b>In Progress</b> - Den is still working on this", legend_style),
+         Paragraph("<font color='#525252'>○</font> <b>Not Started</b> - Not yet on our schedule", legend_style)]
+    ]
+    legend_table = Table(legend_items, colWidths=[0.8*inch, 2.1*inch, 2.1*inch, 1.9*inch])
+    legend_table.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 4),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 4),
+    ]))
+    elements.append(legend_table)
     elements.append(Spacer(1, 0.1*inch))
 
     # Required adventures
@@ -298,22 +328,28 @@ def generate_meeting_list_pdf(meetings_df, roster_df, attendance_df, requirement
         total_in_adventure = len(adventure_reqs)
 
         if completed_in_adventure == total_in_adventure:
-            status = "COMPLETE"
-            bg_color = colors.HexColor('#d1fae5')
-            status_color = colors.HexColor('#166534')
+            status = "Complete"
+            status_icon = "●"
+            bg_color = colors.HexColor('#d1fae5')  # Light green
+            status_color = colors.HexColor('#166534')  # Dark green
         elif completed_in_adventure > 0:
-            status = f"{completed_in_adventure}/{total_in_adventure} covered"
-            bg_color = colors.HexColor('#fef3c7')
-            status_color = colors.HexColor('#92400e')
+            status = f"In Progress ({completed_in_adventure}/{total_in_adventure})"
+            status_icon = "●"
+            bg_color = colors.HexColor('#dbeafe')  # Light blue - neutral, not a warning
+            status_color = colors.HexColor('#1d4ed8')  # Blue
         else:
             status = "Not started"
-            bg_color = colors.HexColor('#f5f5f4')
-            status_color = colors.HexColor('#525252')
+            status_icon = "○"
+            bg_color = colors.HexColor('#f5f5f4')  # Light gray
+            status_color = colors.HexColor('#525252')  # Gray
 
         adventure_text = Paragraph(f"<b>{adventure}</b>", body_style)
-        status_text = Paragraph(f"<font color='{status_color.hexval()}'><b>{status}</b></font>", body_style)
+        status_text = Paragraph(
+            f"<font color='{status_color.hexval()}'>{status_icon} <b>{status}</b></font>",
+            body_style
+        )
 
-        row_table = Table([[adventure_text, status_text]], colWidths=[5*inch, 1.5*inch])
+        row_table = Table([[adventure_text, status_text]], colWidths=[4.5*inch, 2*inch])
         row_table.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, -1), bg_color),
             ('PADDING', (0, 0), (-1, -1), 8),
@@ -334,22 +370,28 @@ def generate_meeting_list_pdf(meetings_df, roster_df, attendance_df, requirement
         total_in_adventure = len(adventure_reqs)
 
         if completed_in_adventure == total_in_adventure:
-            status = "COMPLETE"
-            bg_color = colors.HexColor('#d1fae5')
-            status_color = colors.HexColor('#166534')
+            status = "Complete"
+            status_icon = "●"
+            bg_color = colors.HexColor('#d1fae5')  # Light green
+            status_color = colors.HexColor('#166534')  # Dark green
         elif completed_in_adventure > 0:
-            status = f"{completed_in_adventure}/{total_in_adventure} covered"
-            bg_color = colors.HexColor('#fef3c7')
-            status_color = colors.HexColor('#92400e')
+            status = f"In Progress ({completed_in_adventure}/{total_in_adventure})"
+            status_icon = "●"
+            bg_color = colors.HexColor('#dbeafe')  # Light blue - neutral, not a warning
+            status_color = colors.HexColor('#1d4ed8')  # Blue
         else:
             status = "Not started"
-            bg_color = colors.HexColor('#f5f5f4')
-            status_color = colors.HexColor('#525252')
+            status_icon = "○"
+            bg_color = colors.HexColor('#f5f5f4')  # Light gray
+            status_color = colors.HexColor('#525252')  # Gray
 
         adventure_text = Paragraph(f"<b>{adventure}</b>", body_style)
-        status_text = Paragraph(f"<font color='{status_color.hexval()}'><b>{status}</b></font>", body_style)
+        status_text = Paragraph(
+            f"<font color='{status_color.hexval()}'>{status_icon} <b>{status}</b></font>",
+            body_style
+        )
 
-        row_table = Table([[adventure_text, status_text]], colWidths=[5*inch, 1.5*inch])
+        row_table = Table([[adventure_text, status_text]], colWidths=[4.5*inch, 2*inch])
         row_table.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, -1), bg_color),
             ('PADDING', (0, 0), (-1, -1), 8),
@@ -617,14 +659,16 @@ def generate_scout_progress_report(scout_name, roster_df, requirement_key, meeti
     # Create a buffer to hold the PDF
     buffer = io.BytesIO()
 
-    # Create the PDF document
+    # Create the PDF document with metadata
     doc = SimpleDocTemplate(
         buffer,
         pagesize=letter,
         rightMargin=0.75*inch,
         leftMargin=0.75*inch,
         topMargin=0.75*inch,
-        bottomMargin=0.75*inch
+        bottomMargin=0.75*inch,
+        title=f"Scout Progress Report - {scout_name}",
+        author="Scout Tracker"
     )
 
     # Container for all elements
