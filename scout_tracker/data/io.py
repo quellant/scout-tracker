@@ -55,8 +55,11 @@ def load_requirement_key():
     """Load the requirement key CSV file."""
     if config.REQUIREMENT_KEY_FILE.exists():
         df = pd.read_csv(config.REQUIREMENT_KEY_FILE)
+        # Add URL column if it doesn't exist (backwards compatibility)
+        if "URL" not in df.columns:
+            df["URL"] = ""
         return df
-    return pd.DataFrame(columns=["Req_ID", "Adventure", "Requirement_Description", "Required"])
+    return pd.DataFrame(columns=["Req_ID", "Adventure", "Requirement_Description", "Required", "URL"])
 
 
 @st.cache_data
